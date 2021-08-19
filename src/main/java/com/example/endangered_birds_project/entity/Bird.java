@@ -13,23 +13,27 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import java.time.LocalDate;
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Entity
-@Table(name="species_reproduction")
-public class ReproductionSpecies {
+@Table(name="bird")
+public class Bird {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idReproduction;
-    private String mating_season;
-    private int num_offspring;
-    private int hatching_time;
+    private int bird_id;
 
     @OneToOne
-    @JoinColumn(name = "id", referencedColumnName = "id")
+    @JoinColumn(name = "species_id", referencedColumnName = "id")
     @NotNull
-    private Species id;
+    private Species specie_id;
+
+    private String species_name;
+    private String nickname;
+    private char sex;
+    private LocalDate date_of_birth;
+
 }
