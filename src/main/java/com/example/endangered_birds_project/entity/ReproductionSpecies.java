@@ -1,9 +1,7 @@
 package com.example.endangered_birds_project.entity;
 
 import com.sun.istack.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
@@ -14,8 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-@AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 @Entity
@@ -32,4 +28,15 @@ public class ReproductionSpecies {
     @JoinColumn(name = "id", referencedColumnName = "id")
     @NotNull
     private Species id;
+
+    public ReproductionSpecies(int idReproduction, String mating_season, int num_offspring, int hatching_time, Species id) {
+        this.idReproduction = idReproduction;
+        this.mating_season = mating_season;
+        this.num_offspring = num_offspring;
+        this.hatching_time = hatching_time;
+        this.id = id;
+    }
+
+    public ReproductionSpecies() {
+    }
 }
