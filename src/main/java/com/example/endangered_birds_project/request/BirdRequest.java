@@ -1,11 +1,13 @@
 package com.example.endangered_birds_project.request;
 
 import com.example.endangered_birds_project.entity.Bird;
+import com.example.endangered_birds_project.entity.Species;
 import com.example.endangered_birds_project.repository.SpeciesRepository;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -20,7 +22,10 @@ public class BirdRequest {
 
     public Bird convert(){
         Bird bird = new Bird();
-        bird.setSpecies_name(speciesRepository.getById(species_id).getName());
+        Optional<Species> speciesOptional = speciesRepository.findById(species_id);
+        Species species = speciesOptional.get();
+        bird.setSpecie_id(species);
+        bird.setSpecies_name(species.getName());
         bird.setNickname(this.nickname);
         bird.setSex(this.sex);
         bird.setDate_of_birth(this.date_of_birth);
@@ -29,6 +34,8 @@ public class BirdRequest {
     }
 
     public Bird convertAtualiza(int id){
-        return new Bird(id,speciesRepository.getById(id), speciesRepository.getById(id).getName(),nickname,sex,date_of_birth);
+        Optional<Species> speciesOptional = speciesRepository.findById(species_id);
+        Species species = speciesOptional.get();
+        return new Bird(id,species, species.getName(),nickname,sex,date_of_birth);
     }
 }

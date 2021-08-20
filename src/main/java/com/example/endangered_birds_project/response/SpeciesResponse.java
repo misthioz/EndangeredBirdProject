@@ -30,7 +30,7 @@ public class SpeciesResponse {
         this.num_captive = species.getNum_captive();
     }
 
-    public List<SpeciesResponse> convert(List<Species> speciesList){
+    public static List<SpeciesResponse> convert(List<Species> speciesList){
         return speciesList.stream().map(SpeciesResponse::new).collect(Collectors.toList());
     }
 }

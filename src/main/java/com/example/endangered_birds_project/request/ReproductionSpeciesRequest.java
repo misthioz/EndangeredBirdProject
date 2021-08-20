@@ -6,6 +6,8 @@ import com.example.endangered_birds_project.repository.SpeciesRepository;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.Optional;
+
 @Getter
 @Setter
 public class ReproductionSpeciesRequest {
@@ -19,6 +21,9 @@ public class ReproductionSpeciesRequest {
     public ReproductionSpecies convert(){
         ReproductionSpecies reproductionSpecies = new ReproductionSpecies();
 
+        Optional<Species> speciesOptional = speciesRepository.findById(id);
+        Species species = speciesOptional.get();
+        reproductionSpecies.setId(species);
         reproductionSpecies.setMating_season(this.mating_season);
         reproductionSpecies.setNum_offspring(this.num_offspring);
         reproductionSpecies.setHatching_time(this.hatching_time);
@@ -27,6 +32,8 @@ public class ReproductionSpeciesRequest {
     }
 
     public ReproductionSpecies convertAtualiza(int id_reproduction){
-        return new ReproductionSpecies(id_reproduction,mating_season,num_offspring,hatching_time,speciesRepository.getById(id_reproduction));
+        Optional<Species> speciesOptional = speciesRepository.findById(id);
+        Species species = speciesOptional.get();
+        return new ReproductionSpecies(id_reproduction,mating_season,num_offspring,hatching_time,species);
     }
 }
