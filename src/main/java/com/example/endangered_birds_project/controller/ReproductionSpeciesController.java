@@ -27,6 +27,7 @@ public class ReproductionSpeciesController {
             UriComponentsBuilder uriComponentsBuilder){
         ReproductionSpecies reproductionSpecies = reproductionSpeciesRequest.convert();
         reproductionSpeciesRepository.save(reproductionSpecies);
+
         URI uri = uriComponentsBuilder.path("/reproduction/{id}")
                 .buildAndExpand(reproductionSpecies.getIdReproduction()).toUri();
         return ResponseEntity.created(uri).body(new ReproductionSpeciesResponse(reproductionSpecies));
