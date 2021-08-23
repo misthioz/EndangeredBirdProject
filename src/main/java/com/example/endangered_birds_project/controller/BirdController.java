@@ -5,6 +5,7 @@ import com.example.endangered_birds_project.repository.BirdRepository;
 import com.example.endangered_birds_project.request.BirdRequest;
 import com.example.endangered_birds_project.response.BirdResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,26 @@ public class BirdController {
     public BirdResponse findBirdById(@PathVariable int id){
         Bird bird = birdRepository.getById(id);
         return new BirdResponse(bird);
+    }
+
+    @GetMapping("/findSpecies/{species_name}")
+    public ResponseEntity<?> findBySpeciesName(@PathVariable String species_name){
+        List<Bird> birds = birdRepository.findBySpecies_name(species_name);
+        if(birds.size()>0){
+            return ResponseEntity.ok().body(BirdResponse.convert(birds));
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Species not found. Provided species name: "+species_name);
+        }
+    }
+
+    @GetMapping("/findNickname/{nickname}")
+    public ResponseEntity<?> findBirdByNickname(@PathVariable String nickname){
+        List<Bird> birds = birdRepository.findByNickname(nickname);
+        if(birds.size()>0){
+            return ResponseEntity.ok().body(BirdResponse.convert(birds));
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bird not found. Provided nickname: "+nickname);
+        }
     }
 
     @PostMapping

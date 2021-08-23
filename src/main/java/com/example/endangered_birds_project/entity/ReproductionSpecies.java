@@ -23,18 +23,20 @@ public class ReproductionSpecies {
     private String mating_season;
     private int num_offspring;
     private int hatching_time;
+    private String name;
 
     @OneToOne
     @JoinColumn(name = "id", referencedColumnName = "id")
     @NotNull
     private Species id;
 
-    public ReproductionSpecies(int idReproduction, String mating_season, int num_offspring, int hatching_time, Species id) {
+    public ReproductionSpecies(int idReproduction, String mating_season, int num_offspring, int hatching_time, Species id, String name) {
         this.idReproduction = idReproduction;
         this.mating_season = mating_season;
         this.num_offspring = num_offspring;
         this.hatching_time = hatching_time;
         this.id = id;
+        this.name = name;
     }
 
     public ReproductionSpecies() {

@@ -15,6 +15,7 @@ public class ReproductionSpeciesRequest {
     private int id_reproduction;
     private int id;
     private String mating_season;
+    private String name;
     private int num_offspring;
     private int hatching_time;
 
@@ -26,11 +27,12 @@ public class ReproductionSpeciesRequest {
         reproductionSpecies.setMating_season(this.mating_season);
         reproductionSpecies.setNum_offspring(this.num_offspring);
         reproductionSpecies.setHatching_time(this.hatching_time);
+        reproductionSpecies.setName(this.name);
 
         return reproductionSpecies;
     }
 
     public ReproductionSpecies convertAtualiza(int id_reproduction){
-        return new ReproductionSpecies(id_reproduction,mating_season,num_offspring,hatching_time,speciesRepository.getById(id_reproduction));
+        return new ReproductionSpecies(id_reproduction,mating_season,num_offspring,hatching_time,speciesRepository.getById(id_reproduction), name);
     }
 }

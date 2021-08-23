@@ -5,6 +5,7 @@ import com.example.endangered_birds_project.repository.SpeciesRepository;
 import com.example.endangered_birds_project.request.SpeciesRequest;
 import com.example.endangered_birds_project.response.SpeciesResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,16 @@ public class SpeciesController {
     public SpeciesResponse findSpeciesById(@PathVariable int id){
         Species species = speciesRepository.getById(id);
         return new SpeciesResponse(species);
+    }
+
+    @GetMapping("/findName/{name}")
+    public ResponseEntity<?> findSpeciesByName(@PathVariable String name){
+        List<Species> lspecies = speciesRepository.findByName(name);
+        if(lspecies.size()>0){
+            return ResponseEntity.ok().body(SpeciesResponse.convert(lspecies));
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Name not found. Provided name: "+name);
+        }
     }
 
     @PostMapping

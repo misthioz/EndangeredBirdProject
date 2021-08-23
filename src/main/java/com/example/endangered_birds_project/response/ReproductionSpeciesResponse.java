@@ -14,6 +14,7 @@ public class ReproductionSpeciesResponse {
     @Getter private String mating_season;
     @Getter private int num_offspring;
     @Getter private int hatching_time;
+    @Getter private String name;
 
     public ReproductionSpeciesResponse(ReproductionSpecies reproductionSpecies){
         this.id_reproduction = reproductionSpecies.getIdReproduction();
@@ -21,6 +22,7 @@ public class ReproductionSpeciesResponse {
         this.mating_season = reproductionSpecies.getMating_season();
         this.num_offspring = reproductionSpecies.getNum_offspring();
         this.hatching_time = reproductionSpecies.getHatching_time();
+        this.name = reproductionSpecies.getName();
     }
 
     public static List<ReproductionSpeciesResponse> convert(List<ReproductionSpecies> replist){

@@ -5,6 +5,7 @@ import com.example.endangered_birds_project.repository.EmployeeRepository;
 import com.example.endangered_birds_project.request.EmployeeRequest;
 import com.example.endangered_birds_project.response.EmployeeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -35,6 +36,16 @@ public class EmployeeController {
     public EmployeeResponse findEmployeeById(@PathVariable int id){
         Employee employee = employeeRepository.getById(id);
         return new EmployeeResponse(employee);
+    }
+
+    @GetMapping("/findName/{name}")
+    public ResponseEntity<?> findEmployeeByName(@PathVariable String name){
+        List<Employee> employees = employeeRepository.findByName(name);
+        if(employees.size()>0){
+            return ResponseEntity.ok().body(EmployeeResponse.convert(employees));
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Name nor found. Provided name: "+name);
+        }
     }
 
     @PostMapping
