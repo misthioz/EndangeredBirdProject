@@ -24,6 +24,7 @@ public class SpeciesRequest {
         species.setScientific_name(this.scientific_name);
         species.setFamily(this.family);
         species.setSubfamily(this.subfamily);
+        species.setTribe(this.tribe);
         species.setHabitat(this.habitat);
         species.setNum_wild(this.num_wild);
         species.setNum_captive(this.num_captive);

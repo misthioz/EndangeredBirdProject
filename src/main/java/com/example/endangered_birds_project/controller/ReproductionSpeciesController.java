@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,5 +47,14 @@ public class ReproductionSpeciesController {
         URI uri = uriComponentsBuilder.path("/reproduction/{id}")
                 .buildAndExpand(reproductionSpecies.getIdReproduction()).toUri();
         return ResponseEntity.created(uri).body(new ReproductionSpeciesResponse(reproductionSpecies));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<ReproductionSpeciesResponse> edit(
+            @PathVariable int id, @RequestBody ReproductionSpeciesRequest reproductionSpeciesRequest){
+        ReproductionSpecies reproductionSpecies = reproductionSpeciesRequest.convertAtualiza(id);
+        reproductionSpeciesRepository.save(reproductionSpecies);
+
+        return ResponseEntity.ok(new ReproductionSpeciesResponse(reproductionSpecies));
     }
 }

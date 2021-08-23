@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -44,5 +45,13 @@ public class SpeciesController {
 
         URI uri = uriComponentsBuilder.path("/species/{id}").buildAndExpand(species.getId()).toUri();
         return ResponseEntity.created(uri).body(new SpeciesResponse(species));
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<SpeciesResponse> edit(@PathVariable int id,
+                                                @RequestBody SpeciesRequest speciesRequest){
+        Species species = speciesRequest.convertAtualizar(id);
+        speciesRepository.save(species);
+        return ResponseEntity.ok(new SpeciesResponse(species));
     }
 }
