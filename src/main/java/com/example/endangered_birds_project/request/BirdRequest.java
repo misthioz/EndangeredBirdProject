@@ -22,10 +22,8 @@ public class BirdRequest {
 
     public Bird convert(){
         Bird bird = new Bird();
-        Optional<Species> speciesOptional = speciesRepository.findById(species_id);
-        Species species = speciesOptional.get();
-        bird.setSpecie_id(species);
-        bird.setSpecies_name(species.getName());
+        bird.setSpecies_name(this.species_name);
+        bird.setSpecie_id(speciesRepository.getById(species_id));
         bird.setNickname(this.nickname);
         bird.setSex(this.sex);
         bird.setDate_of_birth(this.date_of_birth);
@@ -34,8 +32,7 @@ public class BirdRequest {
     }
 
     public Bird convertAtualiza(int id){
-        Optional<Species> speciesOptional = speciesRepository.findById(species_id);
-        Species species = speciesOptional.get();
-        return new Bird(id,species, species.getName(),nickname,sex,date_of_birth);
+
+        return new Bird(id,speciesRepository.getById(species_id),species_name,nickname,sex,date_of_birth);
     }
 }
