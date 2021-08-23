@@ -26,7 +26,7 @@ public class BirdResponse {
         this.date_of_birth = getDate_of_birth();
     }
 
-    public List<BirdResponse> convert(List<Bird> birds){
+    public static List<BirdResponse> convert(List<Bird> birds){
         return birds.stream().map(BirdResponse::new).collect(Collectors.toList());
     }
 }

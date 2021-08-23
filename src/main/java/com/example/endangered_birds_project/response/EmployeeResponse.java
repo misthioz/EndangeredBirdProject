@@ -20,7 +20,7 @@ public class EmployeeResponse {
         this.role = employee.getRole();
     }
 
-    public List<EmployeeResponse> convert(List<Employee> employees){
+    public static List<EmployeeResponse> convert(List<Employee> employees){
         return employees.stream().map(EmployeeResponse::new).collect(Collectors.toList());
     }
 }

@@ -19,7 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/species")
 public class SpeciesController {
-
+    @Autowired
     private SpeciesRepository speciesRepository;
 
     @GetMapping("/list")

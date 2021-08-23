@@ -23,7 +23,7 @@ public class ReproductionSpeciesResponse {
         this.hatching_time = reproductionSpecies.getHatching_time();
     }
 
-    public List<ReproductionSpeciesResponse> convert(List<ReproductionSpecies> replist){
+    public static List<ReproductionSpeciesResponse> convert(List<ReproductionSpecies> replist){
         return replist.stream().map(ReproductionSpeciesResponse::new).collect(Collectors.toList());
     }
 }

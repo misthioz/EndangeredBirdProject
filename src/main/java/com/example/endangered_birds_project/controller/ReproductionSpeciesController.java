@@ -14,12 +14,19 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/reproduction")
 public class ReproductionSpeciesController {
-
+    @Autowired
     private ReproductionSpeciesRepository reproductionSpeciesRepository;
+
+    @GetMapping("/list")
+    public List<ReproductionSpeciesResponse> listReproductionSpecies(){
+        List<ReproductionSpecies> rslist = reproductionSpeciesRepository.findAll();
+        return ReproductionSpeciesResponse.convert(rslist);
+    }
 
     @PostMapping
     public ResponseEntity<ReproductionSpeciesResponse> addReproductionSpecies(
