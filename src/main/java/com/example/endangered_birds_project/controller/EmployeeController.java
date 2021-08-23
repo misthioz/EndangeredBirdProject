@@ -7,6 +7,7 @@ import com.example.endangered_birds_project.response.EmployeeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,6 +27,12 @@ public class EmployeeController {
     public List<EmployeeResponse> listEmployees(){
         List<Employee> elist = employeeRepository.findAll();
         return EmployeeResponse.convert(elist);
+    }
+
+    @GetMapping("/{id}")
+    public EmployeeResponse findEmployeeById(@PathVariable int id){
+        Employee employee = employeeRepository.getById(id);
+        return new EmployeeResponse(employee);
     }
 
     @PostMapping

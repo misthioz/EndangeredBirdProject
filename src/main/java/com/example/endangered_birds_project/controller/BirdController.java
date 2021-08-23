@@ -7,6 +7,7 @@ import com.example.endangered_birds_project.response.BirdResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,10 +23,16 @@ public class BirdController {
     @Autowired
     private BirdRepository birdRepository;
 
-    @GetMapping
+    @GetMapping("/list")
     public List<BirdResponse> listBirds(){
         List<Bird> blist = birdRepository.findAll();
         return BirdResponse.convert(blist);
+    }
+
+    @GetMapping("/{id}")
+    public BirdResponse findBirdById(@PathVariable int id){
+        Bird bird = birdRepository.getById(id);
+        return new BirdResponse(bird);
     }
 
     @PostMapping
