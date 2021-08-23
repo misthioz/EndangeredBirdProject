@@ -6,6 +6,7 @@ import com.example.endangered_birds_project.request.EmployeeRequest;
 import com.example.endangered_birds_project.response.EmployeeResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -53,5 +54,11 @@ public class EmployeeController {
         employeeRepository.save(employee);
 
         return ResponseEntity.ok(new EmployeeResponse(employee));
+    }
+
+    @DeleteMapping
+    public ResponseEntity<?> delete(@PathVariable int id){
+        employeeRepository.deleteById(id);
+        return ResponseEntity.ok().build();
     }
 }
