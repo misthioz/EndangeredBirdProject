@@ -31,7 +31,7 @@ public class Bird {
     @NotNull
     private Species specie_id;
 
-    private String species_name;
+    private String speciesName;
     private String nickname;
     private char sex;
     private LocalDate date_of_birth;

@@ -49,6 +49,16 @@ public class ReproductionSpeciesController {
         }
     }
 
+    @GetMapping("/findMatingSeason/{matingSeason}")
+    public ResponseEntity<?> findByMatingSeason(@PathVariable String matingSeason){
+        List<ReproductionSpecies> lrepspeceis = reproductionSpeciesRepository.findByMatingSeason(matingSeason);
+        if(!lrepspeceis.isEmpty()){
+            return ResponseEntity.ok().body(ReproductionSpeciesResponse.convert(lrepspeceis));
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Sason not found. Provided season: "+matingSeason);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<ReproductionSpeciesResponse> addReproductionSpecies(
             @RequestBody ReproductionSpeciesRequest reproductionSpeciesRequest,

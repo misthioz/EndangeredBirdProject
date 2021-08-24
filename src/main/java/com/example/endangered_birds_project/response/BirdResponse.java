@@ -12,7 +12,7 @@ public class BirdResponse {
     private SpeciesRepository speciesRepository;
     @Getter private int bird_id;
     @Getter private int species_id;
-    @Getter String species_name;
+    @Getter String speciesName;
     @Getter String nickname;
     @Getter char sex;
     @Getter LocalDate date_of_birth;
@@ -20,7 +20,7 @@ public class BirdResponse {
     public BirdResponse(Bird bird){
         this.bird_id = bird.getBird_id();
         this.species_id = speciesRepository.getById(species_id).getId();
-        this.species_name = bird.getSpecies_name();
+        this.speciesName = bird.getSpeciesName();
         this.nickname = bird.getNickname();
         this.sex = bird.getSex();
         this.date_of_birth = getDate_of_birth();

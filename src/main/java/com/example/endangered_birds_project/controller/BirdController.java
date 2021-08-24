@@ -40,7 +40,7 @@ public class BirdController {
 
     @GetMapping("/findSpecies/{species_name}")
     public ResponseEntity<?> findBySpeciesName(@PathVariable String species_name){
-        List<Bird> birds = birdRepository.findBySpecies_name(species_name);
+        List<Bird> birds = birdRepository.findBySpeciesName(species_name);
         if(birds.size()>0){
             return ResponseEntity.ok().body(BirdResponse.convert(birds));
         }else{

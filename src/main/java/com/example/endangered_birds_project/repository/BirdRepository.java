@@ -8,6 +8,6 @@ import java.util.List;
 
 @Repository
 public interface BirdRepository extends JpaRepository<Bird, Integer> {
-    List<Bird> findBySpecies_name(String species_name);
+    List<Bird> findBySpeciesName(String species_name);
     List<Bird> findByNickname(String nickname);
 }

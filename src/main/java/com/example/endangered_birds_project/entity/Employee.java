@@ -25,4 +25,5 @@ public class Employee {
     private String name;
     private LocalDate date_of_birth;
     private String role;
+    private String email;
 }

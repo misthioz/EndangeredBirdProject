@@ -4,6 +4,7 @@ import com.sun.istack.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -20,7 +21,10 @@ public class ReproductionSpecies {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idReproduction;
-    private String mating_season;
+
+    @Column(name = "mating_season")
+    private String matingSeason;
+
     private int num_offspring;
     private int hatching_time;
     private String name;
@@ -30,9 +34,9 @@ public class ReproductionSpecies {
     @NotNull
     private Species id;
 
-    public ReproductionSpecies(int idReproduction, String mating_season, int num_offspring, int hatching_time, Species id, String name) {
+    public ReproductionSpecies(int idReproduction, String matingSeason, int num_offspring, int hatching_time, Species id, String name) {
         this.idReproduction = idReproduction;
-        this.mating_season = mating_season;
+        this.matingSeason = matingSeason;
         this.num_offspring = num_offspring;
         this.hatching_time = hatching_time;
         this.id = id;

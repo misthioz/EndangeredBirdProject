@@ -11,7 +11,7 @@ public class ReproductionSpeciesResponse {
     private SpeciesRepository speciesRepository;
     @Getter private int id_species;
     @Getter private int id_reproduction;
-    @Getter private String mating_season;
+    @Getter private String matingSeason;
     @Getter private int num_offspring;
     @Getter private int hatching_time;
     @Getter private String name;
@@ -19,7 +19,7 @@ public class ReproductionSpeciesResponse {
     public ReproductionSpeciesResponse(ReproductionSpecies reproductionSpecies){
         this.id_reproduction = reproductionSpecies.getIdReproduction();
         this.id_species = speciesRepository.getById(id_reproduction).getId();
-        this.mating_season = reproductionSpecies.getMating_season();
+        this.matingSeason = reproductionSpecies.getMatingSeason();
         this.num_offspring = reproductionSpecies.getNum_offspring();
         this.hatching_time = reproductionSpecies.getHatching_time();
         this.name = reproductionSpecies.getName();

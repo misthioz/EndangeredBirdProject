@@ -12,12 +12,14 @@ public class EmployeeResponse {
     @Getter String name;
     @Getter LocalDate date_of_birth;
     @Getter String role;
+    @Getter String email;
 
     public EmployeeResponse(Employee employee){
         this.id = employee.getId();
         this.name = employee.getName();
         this.date_of_birth = employee.getDate_of_birth();
         this.role = employee.getRole();
+        this.email = employee.getEmail();
     }
 
     public static List<EmployeeResponse> convert(List<Employee> employees){

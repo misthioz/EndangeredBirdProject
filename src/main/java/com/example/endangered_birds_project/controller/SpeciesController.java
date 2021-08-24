@@ -48,6 +48,19 @@ public class SpeciesController {
         }
     }
 
+    @GetMapping("/findHabitat/{habitat}")
+    public ResponseEntity<?> findSpeciesByHabitat(@PathVariable String habitat){
+        List<Species> lspecies = speciesRepository.findByHabitat(habitat);
+        if(lspecies.size()>0){
+            return ResponseEntity.ok().body(SpeciesResponse.convert(lspecies));
+        }else{
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Habitat not found. Provided name: "+habitat);
+        }
+    }
+
+
+
+
     @PostMapping
     public ResponseEntity<SpeciesResponse> addSpecies(
             @RequestBody SpeciesRequest speciesRequest,

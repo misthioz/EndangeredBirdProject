@@ -9,4 +9,5 @@ import java.util.List;
 @Repository
 public interface SpeciesRepository extends JpaRepository<Species, Integer> {
     List<Species> findByName(String name);
+    List<Species> findByHabitat(String habitat);
 }
