@@ -4,6 +4,7 @@ import com.example.endangered_birds_project.entity.Bird;
 import com.example.endangered_birds_project.repository.BirdRepository;
 import com.example.endangered_birds_project.request.BirdRequest;
 import com.example.endangered_birds_project.response.BirdResponse;
+import com.example.endangered_birds_project.service.BirdService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,8 @@ import java.util.List;
 public class BirdController {
     @Autowired
     private BirdRepository birdRepository;
+    private BirdService birdService;
+    private SpeciesController speciesController;
 
     @GetMapping("/list")
     public List<BirdResponse> listBirds(){
@@ -59,13 +62,17 @@ public class BirdController {
     }
 
     @PostMapping
-    public ResponseEntity<BirdResponse> addBird(
+    public ResponseEntity<?> addBird(
             @RequestBody BirdRequest birdRequest,
             UriComponentsBuilder uriComponentsBuilder){
         Bird bird = birdRequest.convert();
         birdRepository.save(bird);
 
         URI uri = uriComponentsBuilder.path("/bird/{id}").buildAndExpand(bird.getBird_id()).toUri();
+
+        if(!birdService.checkIfSpeciesExist(bird.getSpecie_id())){
+            return ResponseEntity.ok().body("Species not found, please register bird species.");
+        }
         return ResponseEntity.created(uri).body(new BirdResponse(bird));
     }
 

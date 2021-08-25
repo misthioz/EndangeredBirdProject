@@ -27,9 +27,9 @@ public class SpeciesController {
     private SpeciesRepository speciesRepository;
 
     @GetMapping("/list")
-    public List<SpeciesResponse> listSpecies(){
+    public ResponseEntity<List<SpeciesResponse>> listSpecies(){
         List<Species> speciesList = speciesRepository.findAll();
-        return SpeciesResponse.convert(speciesList);
+        return ResponseEntity.ok(SpeciesResponse.convert(speciesList));
     }
 
     @GetMapping("/{id}")
@@ -41,7 +41,7 @@ public class SpeciesController {
     @GetMapping("/findName/{name}")
     public ResponseEntity<?> findSpeciesByName(@PathVariable String name){
         List<Species> lspecies = speciesRepository.findByName(name);
-        if(lspecies.size()>0){
+        if(!lspecies.isEmpty()){
             return ResponseEntity.ok().body(SpeciesResponse.convert(lspecies));
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Name not found. Provided name: "+name);
@@ -51,15 +51,12 @@ public class SpeciesController {
     @GetMapping("/findHabitat/{habitat}")
     public ResponseEntity<?> findSpeciesByHabitat(@PathVariable String habitat){
         List<Species> lspecies = speciesRepository.findByHabitat(habitat);
-        if(lspecies.size()>0){
+        if(!lspecies.isEmpty()){
             return ResponseEntity.ok().body(SpeciesResponse.convert(lspecies));
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Habitat not found. Provided name: "+habitat);
         }
     }
-
-
-
 
     @PostMapping
     public ResponseEntity<SpeciesResponse> addSpecies(

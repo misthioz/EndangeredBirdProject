@@ -21,7 +21,7 @@ public class BirdRequest {
     public Bird convert(){
         Bird bird = new Bird();
         bird.setSpeciesName(this.speciesName);
-        bird.setSpecie_id(speciesRepository.getById(species_id));
+        bird.setSpecie_id(speciesRepository.getById(this.species_id));
         bird.setNickname(this.nickname);
         bird.setSex(this.sex);
         bird.setDate_of_birth(this.date_of_birth);

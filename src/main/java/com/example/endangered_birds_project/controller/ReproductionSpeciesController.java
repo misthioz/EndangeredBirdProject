@@ -42,7 +42,7 @@ public class ReproductionSpeciesController {
     @GetMapping("/findName/{name}")
     public ResponseEntity<?> findRepSpeciesByName(@PathVariable String name){
         List<ReproductionSpecies> lrepspecies = reproductionSpeciesRepository.findByName(name);
-        if(lrepspecies.size()>0){
+        if(!lrepspecies.isEmpty()){
             return ResponseEntity.ok().body(ReproductionSpeciesResponse.convert(lrepspecies));
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Name not found. Provided name: "+name);
