@@ -7,7 +7,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SpeciesRequest {
-    private int id;
     private String name;
     private String scientific_name;
     private String family;

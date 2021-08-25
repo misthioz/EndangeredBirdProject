@@ -9,7 +9,6 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ReproductionSpeciesRequest {
-    private int id_reproduction;
     private int id;
     private String matingSeason;
     private String name;
@@ -19,7 +18,6 @@ public class ReproductionSpeciesRequest {
     public ReproductionSpecies convert(Species species){
         ReproductionSpecies reproductionSpecies = new ReproductionSpecies();
 
-        reproductionSpecies.setIdReproduction(id_reproduction);
         reproductionSpecies.setId(species);
         reproductionSpecies.setMatingSeason(this.matingSeason);
         reproductionSpecies.setNum_offspring(this.num_offspring);

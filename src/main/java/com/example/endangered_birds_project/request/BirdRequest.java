@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class BirdRequest {
-    private int bird_id;
     private int species_id;
     private String speciesName;
     private String nickname;

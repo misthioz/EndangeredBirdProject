@@ -66,8 +66,8 @@ public class BirdController {
     @PostMapping
     public ResponseEntity<?> addBird(
             @RequestBody BirdRequest birdRequest,
-            UriComponentsBuilder uriComponentsBuilder){
-        Species species = speciesRepository.getById(birdRequest.getSpecies_id());
+            UriComponentsBuilder uriComponentsBuilder) throws Exception {
+        Species species = speciesRepository.findById(birdRequest.getSpecies_id()).orElseThrow(Exception::new);;
         Bird bird = birdRequest.convert(species);
         birdRepository.save(bird);
 
@@ -80,8 +80,8 @@ public class BirdController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<BirdResponse> edit(@PathVariable int id, @RequestBody BirdRequest birdRequest){
-        Species species = speciesRepository.getById(birdRequest.getSpecies_id());
+    public ResponseEntity<BirdResponse> edit(@PathVariable int id, @RequestBody BirdRequest birdRequest) throws Exception {
+        Species species = speciesRepository.findById(birdRequest.getSpecies_id()).orElseThrow(Exception::new);;
         Bird bird = birdRequest.convertAtualiza(id,species);
         birdRepository.save(bird);
 

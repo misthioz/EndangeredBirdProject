@@ -9,7 +9,6 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class EmployeeRequest {
-    private int id;
     private String name;
     private LocalDate date_of_birth;
     private String role;
