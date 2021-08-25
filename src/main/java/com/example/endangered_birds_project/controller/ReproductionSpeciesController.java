@@ -1,6 +1,7 @@
 package com.example.endangered_birds_project.controller;
 
 import com.example.endangered_birds_project.entity.ReproductionSpecies;
+import com.example.endangered_birds_project.entity.Species;
 import com.example.endangered_birds_project.repository.ReproductionSpeciesRepository;
 import com.example.endangered_birds_project.repository.SpeciesRepository;
 import com.example.endangered_birds_project.request.ReproductionSpeciesRequest;
@@ -26,6 +27,7 @@ import java.util.List;
 public class ReproductionSpeciesController {
     @Autowired
     private ReproductionSpeciesRepository reproductionSpeciesRepository;
+    private SpeciesRepository speciesRepository;
 
     @GetMapping("/list")
     public List<ReproductionSpeciesResponse> listReproductionSpecies(){
@@ -63,7 +65,8 @@ public class ReproductionSpeciesController {
     public ResponseEntity<ReproductionSpeciesResponse> addReproductionSpecies(
             @RequestBody ReproductionSpeciesRequest reproductionSpeciesRequest,
             UriComponentsBuilder uriComponentsBuilder){
-        ReproductionSpecies reproductionSpecies = reproductionSpeciesRequest.convert();
+        Species species = speciesRepository.getById(reproductionSpeciesRequest.getId());
+        ReproductionSpecies reproductionSpecies = reproductionSpeciesRequest.convert(species);
         reproductionSpeciesRepository.save(reproductionSpecies);
 
         URI uri = uriComponentsBuilder.path("/reproduction/{id}")
@@ -74,7 +77,8 @@ public class ReproductionSpeciesController {
     @PutMapping("/{id}")
     public ResponseEntity<ReproductionSpeciesResponse> edit(
             @PathVariable int id, @RequestBody ReproductionSpeciesRequest reproductionSpeciesRequest){
-        ReproductionSpecies reproductionSpecies = reproductionSpeciesRequest.convertAtualiza(id);
+        Species species = speciesRepository.getById(reproductionSpeciesRequest.getId());
+        ReproductionSpecies reproductionSpecies = reproductionSpeciesRequest.convertAtualiza(id,species);
         reproductionSpeciesRepository.save(reproductionSpecies);
 
         return ResponseEntity.ok(new ReproductionSpeciesResponse(reproductionSpecies));

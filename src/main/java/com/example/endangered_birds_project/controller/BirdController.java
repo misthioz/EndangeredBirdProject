@@ -1,7 +1,9 @@
 package com.example.endangered_birds_project.controller;
 
 import com.example.endangered_birds_project.entity.Bird;
+import com.example.endangered_birds_project.entity.Species;
 import com.example.endangered_birds_project.repository.BirdRepository;
+import com.example.endangered_birds_project.repository.SpeciesRepository;
 import com.example.endangered_birds_project.request.BirdRequest;
 import com.example.endangered_birds_project.response.BirdResponse;
 import com.example.endangered_birds_project.service.BirdService;
@@ -27,7 +29,7 @@ public class BirdController {
     @Autowired
     private BirdRepository birdRepository;
     private BirdService birdService;
-    private SpeciesController speciesController;
+    private SpeciesRepository speciesRepository;
 
     @GetMapping("/list")
     public List<BirdResponse> listBirds(){
@@ -65,7 +67,8 @@ public class BirdController {
     public ResponseEntity<?> addBird(
             @RequestBody BirdRequest birdRequest,
             UriComponentsBuilder uriComponentsBuilder){
-        Bird bird = birdRequest.convert();
+        Species species = speciesRepository.getById(birdRequest.getSpecies_id());
+        Bird bird = birdRequest.convert(species);
         birdRepository.save(bird);
 
         URI uri = uriComponentsBuilder.path("/bird/{id}").buildAndExpand(bird.getBird_id()).toUri();
@@ -78,7 +81,8 @@ public class BirdController {
 
     @PutMapping("/{id}")
     public ResponseEntity<BirdResponse> edit(@PathVariable int id, @RequestBody BirdRequest birdRequest){
-        Bird bird = birdRequest.convertAtualiza(id);
+        Species species = speciesRepository.getById(birdRequest.getSpecies_id());
+        Bird bird = birdRequest.convertAtualiza(id,species);
         birdRepository.save(bird);
 
         return ResponseEntity.ok(new BirdResponse(bird));
