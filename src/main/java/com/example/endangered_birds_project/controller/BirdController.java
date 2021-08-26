@@ -56,7 +56,7 @@ public class BirdController {
     @GetMapping("/findNickname/{nickname}")
     public ResponseEntity<?> findBirdByNickname(@PathVariable String nickname){
         List<Bird> birds = birdRepository.findByNickname(nickname);
-        if(birds.size()>0){
+        if(!birds.isEmpty()){
             return ResponseEntity.ok().body(BirdResponse.convert(birds));
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bird not found. Provided nickname: "+nickname);
@@ -90,8 +90,12 @@ public class BirdController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> delete(@PathVariable int id){
-        birdRepository.deleteById(id);
-        return ResponseEntity.ok().build();
+        try{
+            birdRepository.deleteById(id);
+            return ResponseEntity.ok().body("Bird removed successfully.");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Bird not found.");
+        }
     }
 
 }

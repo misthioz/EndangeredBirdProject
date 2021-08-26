@@ -1,5 +1,6 @@
 package com.example.endangered_birds_project.service;
 
+import com.example.endangered_birds_project.controller.SpeciesController;
 import com.example.endangered_birds_project.entity.Bird;
 import com.example.endangered_birds_project.entity.Species;
 import com.example.endangered_birds_project.repository.BirdRepository;
@@ -17,7 +18,7 @@ public class BirdService {
     public boolean checkIfSpeciesExist(Species species){
         List<Species> speciesList = speciesRepository.findAll();
         for(Species sp : speciesList){
-            if(species.equals(sp)){
+            if(sp.getId() == species.getId()){
                 changeNumSpecies(species);
                 return true;
             }

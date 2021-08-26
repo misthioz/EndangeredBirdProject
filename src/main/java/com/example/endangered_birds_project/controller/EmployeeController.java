@@ -27,9 +27,17 @@ public class EmployeeController {
     EmployeeRepository employeeRepository;
 
     @GetMapping("/list")
-    public List<EmployeeResponse> listEmployees(){
-        List<Employee> elist = employeeRepository.findAll();
-        return EmployeeResponse.convert(elist);
+    public ResponseEntity<?> listEmployees(){
+        try{
+            List<Employee> elist = employeeRepository.findAll();
+            if(!elist.isEmpty()){
+                return ResponseEntity.ok().body(EmployeeResponse.convert(elist));
+            }else{
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Employees found.");
+            }
+        }catch(Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No connection to the database");
+        }
     }
 
     @GetMapping("/{id}")
@@ -41,7 +49,7 @@ public class EmployeeController {
     @GetMapping("/findName/{name}")
     public ResponseEntity<?> findEmployeeByName(@PathVariable String name){
         List<Employee> employees = employeeRepository.findByName(name);
-        if(employees.size()>0){
+        if(!employees.isEmpty()){
             return ResponseEntity.ok().body(EmployeeResponse.convert(employees));
         }else{
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Name nor found. Provided name: "+name);
@@ -49,14 +57,18 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public ResponseEntity<EmployeeResponse> addEmployee(
+    public ResponseEntity<?> addEmployee(
             @RequestBody EmployeeRequest employeeRequest,
             UriComponentsBuilder uriComponentsBuilder){
         Employee employee = employeeRequest.convert();
-        employeeRepository.save(employee);
+        try{
+            employeeRepository.save(employee);
 
-        URI uri = uriComponentsBuilder.path("/employee/{id}").buildAndExpand(employee.getId()).toUri();
-        return ResponseEntity.created(uri).body(new EmployeeResponse(employee));
+            URI uri = uriComponentsBuilder.path("/employee/{id}").buildAndExpand(employee.getId()).toUri();
+            return ResponseEntity.created(uri).body(new EmployeeResponse(employee));
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No connection to the database");
+        }
     }
 
     @PutMapping("/{id}")
@@ -69,7 +81,11 @@ public class EmployeeController {
 
     @DeleteMapping
     public ResponseEntity<?> delete(@PathVariable int id){
-        employeeRepository.deleteById(id);
-        return ResponseEntity.ok().build();
+        try{
+            employeeRepository.deleteById(id);
+            return ResponseEntity.ok().body("Employee removed successfully.");
+        }catch (Exception e){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Employee not found.");
+        }
     }
 }
